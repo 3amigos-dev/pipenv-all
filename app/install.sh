@@ -12,7 +12,8 @@ apt-get update
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends apt-utils
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends build-essential
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends \
-  python3 python3-pip python3-dev
+  python3 python3-pip python3-dev python3-distutils
+DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends gpg-agent
 python3.10 -m pip install --no-cache-dir --upgrade pip setuptools
 python3.10 -m pip install --no-cache-dir pipenv
 
@@ -27,11 +28,13 @@ DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends cu
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends libffi-dev
 for PYVER in ${NODISTRO_PYTHONVERS} ; do
   DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
-      --no-install-recommends "python${PYVER}" "python${PYVER}-dev"
+      --no-install-recommends "python${PYVER}" "python${PYVER}-distutils"
   if ! curl --fail "https://bootstrap.pypa.io/${PYVER}/get-pip.py" -o get-pip.py ; then
     curl --fail https://bootstrap.pypa.io/get-pip.py -o get-pip.py
   fi
   "python${PYVER}" get-pip.py
   "pip${PYVER}" install --no-cache-dir --upgrade setuptools
   "pip${PYVER}" install --no-cache-dir pipenv
+  DEBIAN_FRONTEND=noninteractive apt-get install -qq -y \
+      --no-install-recommends "python${PYVER}-dev"
 done

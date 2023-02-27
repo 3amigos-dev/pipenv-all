@@ -9,15 +9,14 @@ echo "${PYTHONVERS}"
 
 # Before we go to town with deadsnake get distro pythons in good order
 apt-get update
-DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends apt-utils
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends build-essential
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends \
   python3 python3-pip python3-dev python3-distutils
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends gpg-agent
-python3.10 -m pip install --no-cache-dir --upgrade pip setuptools
-python3.10 -m pip install --no-cache-dir pipenv
+python3.8 -m pip install --no-cache-dir --upgrade pip setuptools
+python3.8 -m pip install --no-cache-dir pipenv
 
-NODISTRO_PYTHONVERS=$( echo "${PYTHONVERS}" | sed 's/3[.]10/ /' )
+NODISTRO_PYTHONVERS=$( echo "${PYTHONVERS}" | sed 's/3[.]8/ /' )
 # Now try deadsnakes
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends openssl
 DEBIAN_FRONTEND=noninteractive apt-get install -qq -y --no-install-recommends software-properties-common
